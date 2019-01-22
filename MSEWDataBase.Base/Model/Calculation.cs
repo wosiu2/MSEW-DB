@@ -15,11 +15,12 @@ namespace MSEWDataBase.Base.Model
         public Person Designer { get; set; }
 
         //Loads
-        [BsonIgnore]
+
         public ICollection<StripLoad> StripLoads { get; set; }
-        
+        public string LoadModel;
+
         //Geometry
-        public WallGeometry Geometry { get; set; }
+        public CalculationWallGeometry Geometry { get; set; }
 
         //Soil used in calculaions
         public Soil RetainedSoil { get; set; }
@@ -37,8 +38,10 @@ namespace MSEWDataBase.Base.Model
         public double FactoredBearingResistance { get; set; }
         public double BearingCDR { get; set; }
 
+
+
         // Confguration of geosintetic layers 
-        [BsonIgnore]
+
         public ICollection<Layer> Layers { get; set; }
     }
 }

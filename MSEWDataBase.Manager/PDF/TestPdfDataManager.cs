@@ -14,8 +14,19 @@ namespace MSEWDataBase.Manager.PDF
 
         public string GetAllPages(string path)
         {
+            var buldier = new StringBuilder();
 
-            return "";
+            using (var reader = new PdfReader(path))
+            {
+                for(int i = 0; i < reader.NumberOfPages; i++)
+                {
+                    buldier.Append(PdfTextExtractor.GetTextFromPage(reader, i+1));
+                }
+
+                reader.Close();
+            }
+
+            return buldier.ToString();
         }
 
         public string GetSinglePage(string path,int page)
@@ -30,5 +41,7 @@ namespace MSEWDataBase.Manager.PDF
 
             return res;
         }
+
+
     }
 }

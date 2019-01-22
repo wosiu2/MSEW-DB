@@ -7,6 +7,9 @@ using System.Text;
 using MSEWDataBase.Base.Model;
 using MSEWDataBase.Manager.PDF;
 using MSEWDataBase.Manager.CalculationData;
+using MSEWDataBase.Repository;
+using MongoDB.Driver;
+using MSEWDataBase.Manager;
 
 namespace MSEWDataBase
 {
@@ -20,15 +23,38 @@ namespace MSEWDataBase
 
             var s = pdf.GetSinglePage(file, 10).Split('\n');
 
-
+            var sa =pdf.GetAllPages(file);
+            var saSplited = sa.Split('\n');
             var list = new[]{"PROJECT IDENTIFICATION",
                              "SOIL DATA",
                              "Geometry and Surcharge loads",
+                             "U N I F O R M   S U R C H A R G E",
+                             "OTHER EXTERNAL LOAD(S)",
                              "ANALYSIS: CALCULATED FACTORS",
                              "BEARING CAPACITY for GIVEN LAYOUT",
                              "RESULTS for STRENGTH",
-                             "RESULTS for PULLOUT"
+                             "RESULTS for PULLOUT",
+                             "REINFORCED SOIL",
+                             "RETAINED SOIL",
+                             "FOUNDATION SOIL",
+                             "LATERAL EARTH PRESSURE COEFFICIENTS"
                              };
+
+
+            var projectList = new[]{"Title:",
+                             "Project Number:",
+                             "Designer:"
+                             };
+
+            var globalFactors = new[]{"factored bearing load",
+                                        "Bearing capacity, CDR =",
+                                        "Factored bearing resistance",
+                                        "Factored bearing load",
+                                     };
+
+            BlockDataManager block = new BlockDataManager();
+
+            var dict = block.ResolveBlocks(sa, list);
 
             var e = s.Where(x => list.Any(y=>x.Contains(y)));
             var ed = list.Where(x => s.Any(y => y.Contains(x)));
@@ -43,51 +69,26 @@ namespace MSEWDataBase
                 Console.WriteLine(ee);
             }
 
-            var ll = new LayersFactorsManager();
-            var layer=ll.ResovleSingle("");
-            var ddasd = ll.Resolve(s);
-            /*
-                    using(var document = PdfReader.Open(file, PdfDocumentOpenMode.ReadOnly))
-                    {
-                        var a = document.Pages[0];
+            var pull= new LayersPulloutManager();
+            var factors = new LayersFactorsManager();
+            var strength = new LayersStrengthManager();
 
-                        var content=ContentReader.ReadContent(a);
-                        var sb = new StringBuilder();
-                        foreach(var el in content)
-                        {
+            var layers = factors.Resolve(dict["ANALYSIS: CALCULATED FACTORS"]);
+            layers = pull.Resolve(dict["RESULTS for PULLOUT"], layers);
+            layers = strength.Resolve(dict["RESULTS for STRENGTH"], layers);
 
+            var abc = new ProjectDataManager();
+            var abcList = abc.GetValidLines(dict["PROJECT IDENTIFICATION"]);
 
-                            if(el is COperator)
-                            {
-                                var oper = (COperator)el;
-                                if (oper.OpCode.OpCodeName == OpCodeName.Tj || oper.OpCode.OpCodeName == OpCodeName.TJ)
-                                {
+            var asas = new SoilDataManager();
 
-                                    foreach (var seq in oper.Operands)
-                                    {
-                                        if (seq is CSequence)
-                                        {
-                                            var seq1 = (CSequence)seq;
-                                            foreach (var str in seq1)
-                                            {
-                                                if (str is CString)
-                                                {
-                                                    var str1 = (CString)str;
-                                                    sb.Append(str1.Value);
+           var rf= asas.Resolve(dict["REINFORCED SOIL"]);
+           var ff = asas.Resolve(dict["FOUNDATION SOIL"]);
+           var rs = asas.Resolve(dict["RETAINED SOIL"]);
 
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+            var dda = new WallGeometryManager();
 
-
-                                //
-                            }
-
-                        }
-                        Console.WriteLine(sb);
-                    }*/
+            var sd=dda.Resolve(dict["Geometry and Surcharge loads"]);
 
             Console.ReadKey();
         }

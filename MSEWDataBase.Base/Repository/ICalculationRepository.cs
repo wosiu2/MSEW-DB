@@ -8,5 +8,8 @@ namespace MSEWDataBase.Base.Repository
     {
         IEnumerable<Calculation> GetByProjectId(ObjectId projectId);
         IEnumerable<Calculation> GetByDesigner(Person designer);
+        IEnumerable<Calculation> GetByWallHeight(double height);
+        IEnumerable<Calculation> GetByLoadModel(string loadModel);
+
     }
 }

@@ -44,9 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculationData\BaseDataManager.cs" />
+    <Compile Include="CalculationData\LayerBaseManager.cs" />
     <Compile Include="CalculationData\LayersFactorsManager.cs" />
     <Compile Include="CalculationData\LayersPulloutManager.cs" />
     <Compile Include="CalculationData\LayersStrengthManager.cs" />
+    <Compile Include="CalculationData\ProjectDataManager.cs" />
+    <Compile Include="CalculationData\SoilDataManager.cs" />
+    <Compile Include="CalculationData\WallGeometryManager.cs" />
+    <Compile Include="PDF\BlockDataManager.cs" />
+    <Compile Include="PDF\PdfSharpDataManager.cs" />
     <Compile Include="PDF\TestPdfDataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

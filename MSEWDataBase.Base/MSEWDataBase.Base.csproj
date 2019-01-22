@@ -61,7 +61,11 @@
   <ItemGroup>
     <Compile Include="Enum\Positions.cs" />
     <Compile Include="Enum\Privileges.cs" />
-    <Compile Include="Manager\ILayerRetriveManager.cs" />
+    <Compile Include="Manager\ICalculationGeometryManager.cs" />
+    <Compile Include="Manager\IDataRetrieveManager.cs" />
+    <Compile Include="Manager\ISoilRetrieveManager.cs" />
+    <Compile Include="Manager\PDF\IBlockFinder.cs" />
+    <Compile Include="Manager\ILayerRetrieveManager.cs" />
     <Compile Include="Manager\PDF\IPdfDataManager.cs" />
     <Compile Include="Model\Calculation.cs" />
     <Compile Include="Model\Company.cs" />
@@ -73,17 +77,15 @@
     <Compile Include="Model\Soil.cs" />
     <Compile Include="Model\StripLoad.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="Model\WallGeometry.cs" />
+    <Compile Include="Model\CalculationWallGeometry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Repository\ICalculationRepository.cs" />
     <Compile Include="Repository\ICompanyRepository.cs" />
-    <Compile Include="Repository\ILayerRepository.cs" />
     <Compile Include="Repository\ILogRepository.cs" />
     <Compile Include="Repository\IPersonRepository.cs" />
     <Compile Include="Repository\IProjectRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\IStripLoadRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
   </ItemGroup>
   <ItemGroup />

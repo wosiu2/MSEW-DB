@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace MSEWDataBase.Base.Model
 {
-    public class Layer:IStorable
+    public class Layer
     {
-        public ObjectId Id { get; set; }
-        public ObjectId CalculationId { get; set; }
-
         public string ProductName { get; set; }
         public double Elevation { get; set; }
         public double Strength { get; set; }
@@ -23,6 +20,9 @@ namespace MSEWDataBase.Base.Model
         public double DirectSlidingCDR { get; set; }
         public double Eccentricity { get; set; }
 
-
+        public double PulloutResistanceForce { get; set; }
+        public double PulloutActiveLength { get; set; }
+        public double PulloutResistanceLength { get; set; }
+        public double ForceActing { get; set; }
     }
 }

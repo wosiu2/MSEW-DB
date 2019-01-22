@@ -8,21 +8,60 @@ using System.Threading.Tasks;
 
 namespace MSEWDataBase.Manager.CalculationData
 {
-    public class LayersStrengthManager : ILayerRetriveManager
+    public class LayersStrengthManager : LayerBaseManager
     {
-        public IEnumerable<string> GetValidLines(IEnumerable<string> lines)
+
+
+        public override Layer ResovleSingle(string line)
         {
-            throw new NotImplementedException();
+            if (IsLineValid(line))
+            {
+                var aLine = line.Split(' ');
+                double.TryParse(aLine[2], out double availableStrength);
+                double.TryParse(aLine[3], out double forceActing);
+
+
+                var layer = new Layer()
+                {
+                    Strength = availableStrength
+                };
+
+                return layer;
+            }
+            else
+            {
+                return new Layer();
+            }
         }
 
-        public IEnumerable<Layer> Resolve(IEnumerable<string> lines)
+        public override Layer ResovleSingle(string line, Layer baseLayer)
         {
-            throw new NotImplementedException();
+            if (IsLineValid(line))
+            {
+                var aLine = line.Split(' ');
+                double.TryParse(aLine[2], out double availableStrength);
+                double.TryParse(aLine[3], out double forceActing);
+
+                baseLayer.Strength = availableStrength;
+                baseLayer.ForceActing = forceActing;
+
+            }
+            return baseLayer;
         }
 
-        public Layer ResovleSingle(string line)
+        internal override bool IsLineValid(string line)
         {
-            throw new NotImplementedException();
+            if (line.Split(' ').Count() >= 10)
+            {
+                var elements = line.Split(' ').Take(9);
+                double temp;
+                foreach (var element in elements)
+                {
+                    if (!(double.TryParse(element, out temp) || element == "N/A")) return false;
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

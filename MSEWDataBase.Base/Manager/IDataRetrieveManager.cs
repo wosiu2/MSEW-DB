@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace MSEWDataBase.Base.Manager
 {
-    public interface ILayerRetriveManager
+    public interface IDataRetrieveManager
     {
-        IEnumerable<Layer> Resolve(IEnumerable<string> lines);
-        Layer ResovleSingle(string line);
+        Calculation Resolve(IEnumerable<string> lines);
+        Calculation Resolve(IEnumerable<string> lines, Calculation baseCalculation);
+
         IEnumerable<string> GetValidLines(IEnumerable<string> lines);
     }
 }
